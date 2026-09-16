@@ -75,11 +75,18 @@ void pinMode(enum Pin pin, char *mode) {
     // Enable the pin's port & set the pin to be an output, by writing the
     // correct CSRs.
 
-    GPIO_TypeDef *port = g_GPIO_port[pin];
-
+    GPIO_TypeDef *gpio = g_GPIO_port[pin];
+    unsigned long field;
+    if (gpio==GPIOA)      field=RCC_AHB2ENR_GPIOAEN;
+    else if (gpio==GPIOB) field=RCC_AHB2ENR_GPIOBEN;
+    else if (gpio==GPIOC) field=RCC_AHB2ENR_GPIOCEN;
+    else           field=RCC_AHB2ENR_GPIOHEN;
+    RCC->AHB2ENR |= field; // Turn on the GPIO clock
 }
+
 void digitalWrite (enum Pin pin, bool value) {
     // YOU GET TO WRITE THIS FUNCTION.
+    GPIO_TypeDef *gpio = g_GPIO_port[pin];
 }
 #endif
 
