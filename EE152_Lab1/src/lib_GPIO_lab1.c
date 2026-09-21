@@ -82,11 +82,19 @@ void pinMode(enum Pin pin, char *mode) {
     else if (gpio==GPIOC) field=RCC_AHB2ENR_GPIOCEN;
     else           field=RCC_AHB2ENR_GPIOHEN;
     RCC->AHB2ENR |= field; // Turn on the GPIO clock
+
+    unsigned int p = g_GPIO_pin[pin];
+    gpio->MODER &= ~(0x3 << (2*p));
+    gpio->MODER |=  (0x1 << (2*p));
 }
 
 void digitalWrite (enum Pin pin, bool value) {
     // YOU GET TO WRITE THIS FUNCTION.
     GPIO_TypeDef *gpio = g_GPIO_port[pin];
+    unsigned int p = g_GPIO_pin[pin];
+    if (value) gpio->ODR |=  (1 << p);
+    else       gpio->ODR &= ~(1 << p);
+
 }
 #endif
 
