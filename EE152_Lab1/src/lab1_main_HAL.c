@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "lab1_main_HAL.h"
-
+// #define USE_HAL
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -68,16 +68,13 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
-
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -92,18 +89,24 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-  int tick = 0;
+    int tick = 0;
+    int red = 0;
+    int green = 0;
   /* USER CODE END 2 */
-
-  while (1)
-  {
+  while (1) {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-    if (tick % 3 == 0) HAL_GPIO_TogglePin(red_GPIO_Port,   red_Pin);
-    if (tick % 2 == 0) HAL_GPIO_TogglePin(green_GPIO_Port, green_Pin);
-    delay(tick % 3 == 0 ? 84 : 83);
-    tick = (tick + 1) % 12;
+    if (tick % 3 == 0) { 
+        red   = !red;   
+        HAL_GPIO_WritePin(red_GPIO_Port, red_Pin, red ? GPIO_PIN_SET : GPIO_PIN_RESET);
+    }
+    if (tick % 2 == 0) { 
+        green = !green; 
+        HAL_GPIO_WritePin(green_GPIO_Port, green_Pin, green ? GPIO_PIN_SET : GPIO_PIN_RESET);
+    }
+    //if tick is multiple of 3 use 84, otherwise use 83
+    delay(tick % 3 == 0 ? 84 : 83); //waits one tick
+    tick = (tick + 1) % 12; 
   }
 }
 

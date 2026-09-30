@@ -21,7 +21,7 @@ int main(void){
     // //     //code for 2, 3 combination
     // // }
 
-    int tick = 0;
+    int tick = 0; 
     bool red = 0;
     bool green = 0;
     while (1) {
@@ -33,7 +33,7 @@ int main(void){
             green = !green; 
             digitalWrite(D13, green); 
         }
-        delay(83); //wait ~1/12 second
+        delay(83); //wait ~1/12 second, so tick increments every ~1/12 second
         tick = (tick + 1) % 12; //1000ms/12 ~ 83.3ms, 1/12 of a second
     }
 }
