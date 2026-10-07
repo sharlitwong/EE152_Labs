@@ -10,8 +10,8 @@
 bool do_blink_red = 1;
 bool do_blink_grn = 1;
 
-int red_frq = 10;
-int green_frq = 10;
+int red_frq = 3;
+int green_frq = 2;
 int red = 0;
 int green = 1;
 
