@@ -10,8 +10,8 @@
 bool do_blink_red = 1;
 bool do_blink_grn = 1;
 
-int red_frq = 3;
-int green_frq = 2;
+int red_frq = 4;
+int green_frq = 6;
 int red = 0;
 int green = 1;
 
@@ -21,13 +21,8 @@ int green = 1;
 void task_blink_red(void * pvParameters) {
     // Hook up the red LED to Nano D12.
     pinMode(D12, "OUTPUT");
-
-    //write this code
-    
-
     for(;;){
         if (do_blink_red) {
-            //stuff...
             digitalWrite (D12, red);
             red = !red;
         }
@@ -40,12 +35,8 @@ void task_blink_red(void * pvParameters) {
 void task_blink_grn( void * pvParameters ) {
     // The green LED is at Nano D13, or PB3.
     pinMode(D13, "OUTPUT");
-
-    //write this similarly...
-    
     for(;;){
         if (do_blink_grn) {
-            //stuff...
             digitalWrite (D13, green);
             green = !green;
         }
@@ -91,7 +82,6 @@ int main()
     if (OK != pdPASS) for ( ;; );
 
     TaskHandle_t task_handle_red = NULL;
-    // ... create task_blink_red ...
     BaseType_t RED = xTaskCreate (
                     task_blink_red,
                     "Blink Red LED",
@@ -102,7 +92,6 @@ int main()
     if (RED != pdPASS) for ( ;; );
 
     TaskHandle_t task_handle_grn = NULL;
-    // ... create task_blink_red ...
     BaseType_t GREEN = xTaskCreate (
                     task_blink_grn,
                     "Blink Green LED",
@@ -111,6 +100,5 @@ int main()
                     tskIDLE_PRIORITY+2,
                     &task_handle_grn);
     if (GREEN != pdPASS) for ( ;; );
-
     vTaskStartScheduler();
 }
