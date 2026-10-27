@@ -96,8 +96,8 @@ static void serial_write_lab3 (const char *user_buf) {
     // Return the mutex.
     if (xSemaphoreGive(g_serial_write_mutex) != pdTRUE)
         error_152 ("Illegal semaphore?");
-
-    vTaskDelay(1);
+    
+    // vTaskDelay(1);
 }
 
 static void task_UART_daemon (void *pvParameters) {
